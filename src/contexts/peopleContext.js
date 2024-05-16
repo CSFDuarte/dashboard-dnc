@@ -61,9 +61,9 @@ const generateRandomPeople = (num) => {
   for (let i = 0; i < num; i++) {
     people.push({
       id: i + 1,
-      name: faker.person.firstName(),
+      name: faker.person.fullName(),
       profilePic: faker.image.avatar(),
-      specialties: faker.helpers.arrayElements(possibleSpecities, { min: 1, max: 3 }),
+      specialties: faker.helpers.arrayElements(possibleSpecities, { min: 1, max: 5 }),
       city: faker.helpers.arrayElement(possibleCities),
       experience: Math.floor(Math.random() * 20) + 1
     });
@@ -74,7 +74,6 @@ const generateRandomPeople = (num) => {
 const PeopleProvider = ({ children }) => {
   const [people, setPeople] = useState([]);
   const [currentUser, setCurrentUser] = useState();
-  const [data, setData] = useState({});
 
   useEffect(() => {
     const people = generateRandomPeople(20);
@@ -85,7 +84,7 @@ const PeopleProvider = ({ children }) => {
   }, [])
 
   return (
-    <PeopleContext.Provider value={{ people, currentUser, setCurrentUser, data }}>
+    <PeopleContext.Provider value={{ people, currentUser, setCurrentUser }}>
       {currentUser && children}
     </PeopleContext.Provider>
   );
