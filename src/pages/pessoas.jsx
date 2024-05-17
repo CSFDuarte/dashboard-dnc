@@ -1,19 +1,42 @@
-import React from 'react';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import React, { useContext } from 'react';
+import usePeople, { PeopleContext } from '../contexts/peopleContext';
+import { Grid, Paper, Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
+import Cadastro from './cadastro';
 
-const People = () => {
+const Pessoas = () => {
+  const { people, setPeople } = usePeople();
+
+  const handleAddDeveloper = (newDeveloper) => {
+    setPeople([...people, newDeveloper]);
+  };
+
   return (
-    <Container component="main" maxWidth="lg">
-      <Box sx={{ mt: 4, mb: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Gestão de Desenvolvedores
-        </Typography>
-        {/* CRUD AQUI */}
-      </Box>
-    </Container>
+    <Grid container spacing={2} style={{ padding: '20px' }}>
+      <Grid item xs={12} md={6}>
+        <Cadastro onSubmit={handleAddDeveloper} />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Paper style={{ padding: '20px' }}>
+          <Typography variant="h6" gutterBottom>
+            Lista de Desenvolvedores
+          </Typography>
+          <List>
+            {people.map((person, index) => (
+              <React.Fragment key={index}>
+                <ListItem>
+                  <ListItemText
+                    primary={person.name}
+                    secondary={`Experiência: ${person.experience} anos, Especialidades: ${person.specialties.join(', ')}`}
+                  />
+                </ListItem>
+                {index < people.length - 1 && <Divider />}
+              </React.Fragment>
+            ))}
+          </List>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 };
 
-export default People;
+export default Pessoas;

@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import { PeopleContext } from '../contexts/peopleContext';
+import usePeople from '@/contexts/peopleContext';
 
 const InfoSection = () => {
-  const { people } = useContext(PeopleContext);
+  const { people } = usePeople();
 
   const { totalPeople, averageSpecialties, averageExperience, uniqueCities } = {
     totalPeople: people.length,

@@ -1,5 +1,5 @@
-import React, { useContext, useMemo } from 'react';
-import { PeopleContext } from '../contexts/peopleContext';
+import React, { useMemo } from 'react';
+import usePeople from '../contexts/peopleContext';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -10,7 +10,7 @@ const ChartCard = ({ title, data, dataKey, fillColor, xAxisAngle }) => (
     <Typography noWrap variant="h6">{title}</Typography>
     <ResponsiveContainer width="100%" height={300}>
       <BarChart data={data}>
-        <XAxis dataKey="Nome" height={60} textAnchor="end" angle={xAxisAngle} />
+        <XAxis dataKey="Nome" height={80} textAnchor="end" angle={xAxisAngle} />
         <YAxis />
         <Tooltip />
         <Bar dataKey={dataKey} fill={fillColor} />
@@ -20,7 +20,7 @@ const ChartCard = ({ title, data, dataKey, fillColor, xAxisAngle }) => (
 );
 
 const ChartsSection = () => {
-  const { people } = useContext(PeopleContext);
+  const { people } = usePeople();
 
   const experienceData = useMemo(() => {
     const groups = people.reduce((acc, person) => {
@@ -61,7 +61,7 @@ const ChartsSection = () => {
       </Grid>
       <Grid item xs={12} md={8}>
         <ChartCard
-          title="Especialidades"
+          title="Especialidades mais comuns"
           data={specialtyData}
           dataKey="Quantidade"
           fillColor="#82ca9d"

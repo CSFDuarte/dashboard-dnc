@@ -3,10 +3,13 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Box } from '@mui/system';
+import { useTheme } from '@mui/material';
 
 const Footer = () => {
+  const theme = useTheme();
+
   return (
-    <Box component="footer" sx={{ py: 3, px: 2, mt: 'auto', backgroundColor: '#196bc7', color: '#FFFFFF' }}>
+    <Box component="footer" sx={{ py: 3, px: 2, mt: 'auto', backgroundColor: theme.palette.primary.main, color: '#FFFFFF' }}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid item xs={12} md={4}>
@@ -15,7 +18,7 @@ const Footer = () => {
             <Typography variant="body2">contato@escoladnc.com.br</Typography>
           </Grid>
           <Grid item xs={12} md={4} textAlign="center">
-            <img src="/logo.png" alt="Company Logo" style={{ width: '4rem', marginBottom: '8px' }} />
+            <img src="https://ed.escoladnc.com.br/wp-content/webp-express/webp-images/uploads/2024/04/logo-dnc-branco.png.webp" alt="Company Logo" style={{ width: '4rem', marginBottom: '8px' }} />
             <Typography variant="h6">Dashboard DNC</Typography>
             <Typography variant="body2">&copy; 2024 DNC Treinamentos</Typography>
           </Grid>

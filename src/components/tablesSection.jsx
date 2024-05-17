@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import { PeopleContext } from '../contexts/peopleContext';
+import usePeople, { PeopleContext } from '../contexts/peopleContext';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { DataGrid } from '@mui/x-data-grid';
 
 const TablesSection = () => {
-  const { people } = useContext(PeopleContext);
+  const { people } = usePeople();
 
   const topExperienced = [...people.sort((a, b) => b.experience - a.experience)]
 

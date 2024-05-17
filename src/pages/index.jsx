@@ -8,13 +8,11 @@ import { Container, Grid } from '@mui/material';
 
 const Dashboard = () => {
   return (
-    <PeopleProvider>
-        <Grid container spacing={1} p={1}>
-          <InfoSection />
-          <ChartsSection />
-          <TablesSection />
-        </Grid>
-    </PeopleProvider>
+    <Grid container spacing={1} p={1}>
+      <InfoSection />
+      <ChartsSection />
+      <TablesSection />
+    </Grid>
   );
 };
 

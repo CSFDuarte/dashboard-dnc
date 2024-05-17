@@ -11,12 +11,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { PeopleContext } from '@/contexts/peopleContext';
+import usePeople from '@/contexts/peopleContext';
 import { useRouter } from 'next/router';
 import { Person } from '@mui/icons-material';
 
 function ResponsiveAppBar() {
-  const {currentUser} = useContext(PeopleContext);
+  const {currentUser} = usePeople();;
   const router = useRouter();
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -48,13 +48,16 @@ function ResponsiveAppBar() {
     onClick: () => router.push('/pessoas'),
   }];
 
-  const settings = [{ title: currentUser.name, icon: <Person />}];
+  const settings = [{
+    title: currentUser.name,
+    icon: <Person />
+  }];
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img src="/logo.png" alt="logo" height={36} style={{marginRight: "1rem"}} />
+          <img src="https://ed.escoladnc.com.br/wp-content/webp-express/webp-images/uploads/2024/04/logo-dnc-branco.png.webp" alt="logo" height={36} style={{marginRight: "1rem"}} />
           {/* Mobile */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
             <IconButton
