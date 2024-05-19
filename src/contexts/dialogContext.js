@@ -6,8 +6,8 @@ const DialogContext = createContext();
 export const DialogProvider = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [dialogConfig, setDialogConfig] = useState({
-    title: '',
-    content: '',
+    title: 'Tem certeza que deseja continuar?',
+    content: 'Tem certeza que ainda quer realizar esta ação?',
     onConfirm: () => {},
     onCancel: () => {},
   });
