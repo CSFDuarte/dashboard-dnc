@@ -11,9 +11,9 @@ const Cadastro = () => {
 
   const handleAddDeveloper = (data) => {
     openDialog({
-      title: 'Título',
-      content: 'Conteúdo',
-      onConfirm: () => handleConfirm(data), // Pass handleConfirm as a reference
+      title: 'Tem certeza que deseja cadastrar ' + data.name + '?',
+      content: 'Após cadastrado, o desenvolvedor não poderá ser removido da base.',
+      onConfirm: () => handleConfirm(data),
     });
   }
 
