@@ -15,8 +15,8 @@ function MyApp({ Component, pageProps }) {
   });
   
   return (
-    <DialogProvider>
-      <PeopleProvider>
+    <PeopleProvider>
+      <DialogProvider>
         <ThemeProvider theme={theme}>
           <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <Header />
@@ -24,8 +24,8 @@ function MyApp({ Component, pageProps }) {
             <Footer />
           </div>
         </ThemeProvider>
-      </PeopleProvider>
-    </DialogProvider>
+      </DialogProvider>
+    </PeopleProvider>
   );
 }
 
