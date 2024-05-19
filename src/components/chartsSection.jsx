@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recha
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material';
 
 const ChartCard = ({ title, data, dataKey, fillColor, xAxisAngle }) => (
   <Paper elevation={3} style={{padding: '20px', textAlign: 'center'}}>
@@ -21,6 +22,7 @@ const ChartCard = ({ title, data, dataKey, fillColor, xAxisAngle }) => (
 
 const ChartsSection = () => {
   const { people } = usePeople();
+  const theme = useTheme();
 
   const experienceData = useMemo(() => {
     const groups = people.reduce((acc, person) => {
@@ -55,7 +57,7 @@ const ChartsSection = () => {
           title="Desenvolvedores por experiência"
           data={experienceData}
           dataKey="Quantidade"
-          fillColor="#8884d8"
+          fillColor={theme.palette.primary.main}
           xAxisAngle={-40}
         />
       </Grid>
@@ -64,7 +66,7 @@ const ChartsSection = () => {
           title="Especialidades mais comuns"
           data={specialtyData}
           dataKey="Quantidade"
-          fillColor="#82ca9d"
+          fillColor={theme.palette.primary.main}
           xAxisAngle={-50}
         />
       </Grid>

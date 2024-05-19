@@ -1,143 +1,75 @@
-import React, {useContext} from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import React, { useState } from 'react';
+import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import usePeople from '@/contexts/peopleContext';
 import { useRouter } from 'next/router';
-import { Person } from '@mui/icons-material';
+import PersonIcon from '@mui/icons-material/Person';
+import usePeople from '@/contexts/peopleContext';
 
-function ResponsiveAppBar() {
-  const {currentUser} = usePeople();;
+function NavBar() {
   const router = useRouter();
+  const { currentUser } = usePeople();
+  const [mobileMenuAnchor, setMobileMenuAnchor] = useState(null);
+  const [profileMenuAnchor, setProfileMenuAnchor] = useState(null);
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const handleOpenMenu = (setAnchor) => (event) => setAnchor(event.currentTarget);
+  const handleCloseMenu = (setAnchor) => () => setAnchor(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  const pages = [{
-    title: 'Dashboard',
-    onClick: () => router.push('/'),
-  }, {
-    title: 'Cadastro',
-    onClick: () => router.push('/cadastro'),
-  }, {
-    title: 'Pessoas',
-    onClick: () => router.push('/pessoas'),
-  }];
-
-  const settings = [{
-    title: currentUser.name,
-    icon: <Person />
-  }];
+  const pages = [
+    { title: 'Dashboard', onClick: () => router.push('/') },
+    { title: 'Cadastro', onClick: () => router.push('/cadastro') },
+    { title: 'Pessoas', onClick: () => router.push('/pessoas') },
+  ];
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="xxl">
         <Toolbar disableGutters>
-          <img src="https://ed.escoladnc.com.br/wp-content/webp-express/webp-images/uploads/2024/04/logo-dnc-branco.png.webp" alt="logo" height={36} style={{marginRight: "1rem"}} />
-          {/* Mobile */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon fontSize='36px'/>
+          <img src="https://ed.escoladnc.com.br/wp-content/webp-express/webp-images/uploads/2024/04/logo-dnc-branco.png.webp" alt="logo" height={36} style={{ marginRight: '1rem' }} />
+
+          {/* Menu Desktop  */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
+            {pages.map((page) => (
+              <Button key={page.title} onClick={page.onClick} sx={{ my: 2, color: 'white', display: 'block' }}>
+                <Typography variant="h6" textAlign="center">{page.title}</Typography>
+              </Button>
+            ))}
+          </Box>
+          <Box sx={{ flexGrow: 1, visibility: { xs: 'hidden', sm: 'visible' } }}/>
+
+          {/* Menu Mobile */}
+          <Box sx={{ flexGrow: 0, display: { xs: 'flex', sm: 'none' } }}>
+            <IconButton onClick={handleOpenMenu(setMobileMenuAnchor)} color="inherit">
+              <MenuIcon fontSize='36px' />
             </IconButton>
             <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
+              anchorEl={mobileMenuAnchor}
+              open={Boolean(mobileMenuAnchor)}
+              onClose={handleCloseMenu(setMobileMenuAnchor)}
+              sx={{ display: { xs: 'block', md: 'none' }}}
             >
               {pages.map((page) => (
                 <MenuItem key={page.title} onClick={page.onClick}>
-                  <Typography variant='h6' textAlign="center">{page.title}</Typography>
+                  <Typography variant="h6" textAlign="center">{page.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          {/* Desktop */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.title}
-                onClick={page.onClick}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                <Typography variant='h6' textAlign="center">
-                  {page.title}
-                </Typography>
-              </Button>
-            ))}
-          </Box>
 
+          {/* Perfil */}
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={currentUser.profileImg} />
-              </IconButton>
-            </Tooltip>
+            <IconButton onClick={handleOpenMenu(setProfileMenuAnchor)} sx={{ p: 0 }}>
+              <Avatar alt={currentUser.name} src={currentUser.profileImg} />
+            </IconButton>
             <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              anchorEl={profileMenuAnchor}
+              open={Boolean(profileMenuAnchor)}
+              onClose={handleCloseMenu(setProfileMenuAnchor)}
+              sx={{ display: { xs: 'block', md: 'none' }}}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={setting.onClick}>
-                    {setting.icon}
-                    <Typography ml={1}>{setting.title}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem>
+                <PersonIcon />
+                <Typography ml={1}>{currentUser.name}</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
@@ -145,4 +77,5 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
-export default ResponsiveAppBar;
+
+export default NavBar;

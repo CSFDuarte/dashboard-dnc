@@ -1,38 +1,52 @@
-import React, { useContext } from 'react';
-import usePeople, { PeopleContext } from '../contexts/peopleContext';
-import { Grid, Paper, Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
-import Cadastro from './cadastro';
+import React, { useState } from 'react';
+import usePeople from '../contexts/peopleContext';
+import { Grid, Paper, Typography, Divider, TextField } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import InfoSection from '@/components/infoSection';
 
 const Pessoas = () => {
-  const { people, setPeople } = usePeople();
+  const { people } = usePeople();
+  const [searchText, setSearchText] = useState('');
 
-  const handleAddDeveloper = (newDeveloper) => {
-    setPeople([...people, newDeveloper]);
-  };
+  const columns = [
+    { field: 'name', headerName: 'Nome', flex: 1 },
+    { field: 'specialties', headerName: 'Especialidades', flex: 2 },
+    { field: 'city', headerName: 'Cidade', flex: 1},
+    { field: 'experience', headerName: 'Experiência', maxWidth: 150 },
+  ];
+
+  const filteredPeople = people.filter(person =>
+    person.name.toLowerCase().includes(searchText.toLowerCase()) ||
+    person.city.toLowerCase().includes(searchText.toLowerCase()) ||
+    person.specialties.some(specialty => specialty.toLowerCase().includes(searchText.toLowerCase()))
+  );
 
   return (
-    <Grid container spacing={2} style={{ padding: '20px' }}>
-      <Grid item xs={12} md={6}>
-        <Cadastro onSubmit={handleAddDeveloper} />
-      </Grid>
-      <Grid item xs={12} md={6}>
+    <Grid container spacing={1} p={1}>
+      <InfoSection/>
+      <Grid item xs={12}>
         <Paper style={{ padding: '20px' }}>
+          {/* Título */}
           <Typography variant="h6" gutterBottom>
             Lista de Desenvolvedores
           </Typography>
-          <List>
-            {people.map((person, index) => (
-              <React.Fragment key={index}>
-                <ListItem>
-                  <ListItemText
-                    primary={person.name}
-                    secondary={`Experiência: ${person.experience} anos, Especialidades: ${person.specialties.join(', ')}`}
-                  />
-                </ListItem>
-                {index < people.length - 1 && <Divider />}
-              </React.Fragment>
-            ))}
-          </List>
+          {/* Busca */}
+          <TextField
+            label="Buscar"
+            value={searchText}
+            onChange={e => setSearchText(e.target.value)}
+            fullWidth
+            margin='normal'
+          />
+          {/* Tabela de Desenvolvedores */}
+          <DataGrid
+            rows={filteredPeople}
+            columns={columns}
+            initialState={{ pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            }}}
+            pageSizeOptions={[10, 20, 50]}
+          />
         </Paper>
       </Grid>
     </Grid>
