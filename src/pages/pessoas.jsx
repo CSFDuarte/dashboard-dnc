@@ -9,10 +9,10 @@ const Pessoas = () => {
   const [searchText, setSearchText] = useState('');
 
   const columns = [
-    { field: 'name', headerName: 'Nome', flex: 1 },
-    { field: 'specialties', headerName: 'Especialidades', flex: 2 },
-    { field: 'city', headerName: 'Cidade', flex: 1},
-    { field: 'experience', headerName: 'Experiência', maxWidth: 150 },
+    { field: 'name', headerName: 'Nome', flex: 2, minWidth: 200 },
+    { field: 'specialties', headerName: 'Especialidades', flex: 2, minWidth: 200 },
+    { field: 'city', headerName: 'Cidade', flex: 1, minWidth: 150},
+    { field: 'experience', headerName: 'Experiência', maxWidth: 150, minWidth: 100 },
   ];
 
   const filteredPeople = people.filter(person =>

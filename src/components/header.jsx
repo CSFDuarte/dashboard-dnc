@@ -64,7 +64,6 @@ function NavBar() {
               anchorEl={profileMenuAnchor}
               open={Boolean(profileMenuAnchor)}
               onClose={handleCloseMenu(setProfileMenuAnchor)}
-              sx={{ display: { xs: 'block', md: 'none' }}}
             >
               <MenuItem>
                 <PersonIcon />
