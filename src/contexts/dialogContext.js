@@ -25,12 +25,12 @@ export const DialogProvider = ({ children }) => {
   const handleConfirm = useCallback(() => {
     dialogConfig.onConfirm();
     handleClose(); 
-  }, [dialogConfig.onConfirm, handleClose]);
+  }, [dialogConfig, handleClose]);
 
   const handleCancel = useCallback(() => {
     dialogConfig.onCancel();
     handleClose();
-  }, [dialogConfig.onCancel, handleClose]);
+  }, [dialogConfig, handleClose]);
 
   return (
     <DialogContext.Provider value={{ openDialog: handleOpen }}>
